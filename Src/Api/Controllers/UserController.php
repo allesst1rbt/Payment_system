@@ -3,10 +3,7 @@
 namespace Src\Api\Controllers;
 
 use Exception;
-use Src\Api\Models\User;
-use Src\Api\Repositories\UserRepository;
 use Src\Api\Services\UserService;
-use Src\Api\Validators\ValidateCreateUserRequest;
 use Src\Request;
 use Src\Response;
 
@@ -16,7 +13,7 @@ class UserController
 
     public function __construct()
     {
-        $this->userService = new UserService();
+        $this->userService = new UserService;
     }
 
     public function create(Request $request, Response $response)
@@ -45,21 +42,15 @@ class UserController
         }
     }
 
-    public function login(Request $request, Response $response) {
-         try {
+    public function login(Request $request, Response $response)
+    {
+        try {
 
-            $data = (array) $request->getJSON();
-
-            $createdUser = $this->userService->login($data);
+            $token = $this->userService->login($request->getJSON());
 
             $response->toJSON([
                 'success' => true,
-                'user' => [
-                    'id' => $createdUser->id,
-                    'name' => $createdUser->name,
-                    'email' => $createdUser->email,
-                    'document' => $createdUser->document,
-                ],
+                'token' => $token,
             ]);
 
         } catch (Exception $e) {
@@ -68,5 +59,10 @@ class UserController
                 'error' => 'Unexpected error: '.$e->getMessage(),
             ]);
         }
+    }
+
+    public function me(Request $request, Response $response) {
+        $user = $this->userService->findUserById($_SESSION["user"]["id"]);
+        $response->toJSON((array)$user);
     }
 }

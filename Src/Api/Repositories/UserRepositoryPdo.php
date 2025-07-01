@@ -49,7 +49,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
 
     public function findByUserId(int $id): ?User
     {
-         try {
+        try {
             $stmt = $this->db->prepare('SELECT id, name, email, password, document FROM users WHERE id = :id');
             $stmt->execute([':id' => $id]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -71,8 +71,9 @@ class UserRepositoryPdo implements UserRepositoryInterface
             return null;
         }
     }
-    
-    public function findByUserEmail(string $email): ?User {
+
+    public function findByUserEmail(string $email): ?User
+    {
         try {
             $stmt = $this->db->prepare('SELECT id, name, email, password, document FROM users WHERE email = :email');
             $stmt->execute([':email' => $email]);

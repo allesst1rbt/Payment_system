@@ -10,5 +10,5 @@ interface UserServiceInterface
 
     public function findUserById(int $id): ?User;
 
-    public function login(object $auth): object;
+    public function login(object $auth): string;
 }

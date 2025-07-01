@@ -15,5 +15,4 @@ class User
     public ?string $document = null;
 
     public ?string $type = null;
-    
 }
