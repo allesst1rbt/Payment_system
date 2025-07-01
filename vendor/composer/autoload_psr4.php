@@ -8,7 +8,12 @@ $baseDir = dirname($vendorDir);
 return array(
     'Src\\' => array($baseDir . '/Src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src', $vendorDir . '/psr/http-factory/src'),
+    'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
+    'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
+    'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Database\\Seeders\\' => array($vendorDir . '/laravel/pint/database/seeders'),
     'Database\\Factories\\' => array($vendorDir . '/laravel/pint/database/factories'),
     'BlakvGhost\\PHPValidator\\' => array($vendorDir . '/blakvghost/php-validator/src'),

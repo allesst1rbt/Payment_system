@@ -9,4 +9,6 @@ interface UserRepositoryInterface
     public function create(User $user): ?User;
 
     public function findByUserId(int $id): ?User;
+
+    public function findByUserEmail(string $email): ?User;
 }

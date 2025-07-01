@@ -1,14 +1,14 @@
 <?php
 
-namespace Src\Api\Services;
+namespace Src\Api\Repositories;
 
 use PDO;
 use PDOException;
 use Src\Api\Db\PdoConnection;
-use Src\Api\Interfaces\UserServiceInterface;
+use Src\Api\Interfaces\UserRepositoryInterface;
 use Src\Api\Models\User;
 
-class UserServicePdo implements UserServiceInterface
+class UserRepositoryPdo implements UserRepositoryInterface
 {
     private PDO $db;
 
@@ -47,9 +47,9 @@ class UserServicePdo implements UserServiceInterface
         }
     }
 
-    public function findUserById(int $id): ?User
+    public function findByUserId(int $id): ?User
     {
-        try {
+         try {
             $stmt = $this->db->prepare('SELECT id, name, email, password, document FROM users WHERE id = :id');
             $stmt->execute([':id' => $id]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -60,6 +60,29 @@ class UserServicePdo implements UserServiceInterface
                 $user->name = $data['name'];
                 $user->email = $data['email'];
                 $user->document = $data['document'];
+
+                return $user;
+            }
+
+            return null;
+        } catch (PDOException $e) {
+            echo 'Error finding user: '.$e->getMessage();
+
+            return null;
+        }
+    }
+    
+    public function findByUserEmail(string $email): ?User {
+        try {
+            $stmt = $this->db->prepare('SELECT id, name, email, password, document FROM users WHERE email = :email');
+            $stmt->execute([':email' => $email]);
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                $user = new User;
+                $user->id = (int) $data['id'];
+                $user->email = $data['email'];
+                $user->password = $data['password'];
 
                 return $user;
             }

@@ -13,4 +13,7 @@ class User
     public ?string $password;
 
     public ?string $document = null;
+
+    public ?string $type = null;
+    
 }
