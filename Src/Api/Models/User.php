@@ -15,4 +15,9 @@ class User
     public ?string $document = null;
 
     public ?string $type = null;
+
+    public function isShopKeeper() {
+        return $this->type == 'shopkeeper';
+    }
+
 }
