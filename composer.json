@@ -1,0 +1,17 @@
+{
+    "name": "carloseduardodias/stock_management_php",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "Src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "carlos dias",
+            "email": "carloseduardodc090@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^3.9"
+    }
+}
