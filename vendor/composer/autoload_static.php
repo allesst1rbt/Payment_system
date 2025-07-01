@@ -19,6 +19,19 @@ class ComposerStaticInitdab87149d34dbc56879c852211c0b560
         array (
             'Monolog\\' => 8,
         ),
+        'D' => 
+        array (
+            'Database\\Seeders\\' => 17,
+            'Database\\Factories\\' => 19,
+        ),
+        'B' => 
+        array (
+            'BlakvGhost\\PHPValidator\\' => 24,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -33,6 +46,22 @@ class ComposerStaticInitdab87149d34dbc56879c852211c0b560
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Database\\Seeders\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/pint/database/seeders',
+        ),
+        'Database\\Factories\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/pint/database/factories',
+        ),
+        'BlakvGhost\\PHPValidator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/blakvghost/php-validator/src',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/pint/app',
         ),
     );
 

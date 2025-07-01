@@ -9,9 +9,10 @@ class Response
     public function status(int $code)
     {
         $this->status = $code;
+
         return $this;
     }
-    
+
     public function toJSON($data = [])
     {
         http_response_code($this->status);

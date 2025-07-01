@@ -9,4 +9,8 @@ return array(
     'Src\\' => array($baseDir . '/Src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Database\\Seeders\\' => array($vendorDir . '/laravel/pint/database/seeders'),
+    'Database\\Factories\\' => array($vendorDir . '/laravel/pint/database/factories'),
+    'BlakvGhost\\PHPValidator\\' => array($vendorDir . '/blakvghost/php-validator/src'),
+    'App\\' => array($vendorDir . '/laravel/pint/app'),
 );

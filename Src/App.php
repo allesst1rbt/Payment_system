@@ -1,7 +1,6 @@
-<?php 
-namespace Src;
+<?php
 
-use Src\Logger;
+namespace Src;
 
 class App
 {
