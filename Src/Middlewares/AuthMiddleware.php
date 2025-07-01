@@ -11,24 +11,21 @@ class AuthMiddleware
 {
     public static function handle(Request $req, Response $res)
     {
-        
-        if (!preg_match("/^Bearer\s+(.*)$/", $_SERVER["HTTP_AUTHORIZATION"], $matches)) {
+
+        if (! preg_match("/^Bearer\s+(.*)$/", $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
             $res->status(400);
-            $res->toJSON(["message" => "incomplete authorization header"]);
+            $res->toJSON(['message' => 'incomplete authorization header']);
         }
 
         try {
-            $_SESSION["user"] = (new Jwt())->decode($matches[1]);
+            $_SESSION['user'] = (new Jwt)->decode($matches[1]);
 
         } catch (Exception $e) {
 
             $res->status(400);
-            $res->toJSON(["message" => $e->getMessage()]);
+            $res->toJSON(['message' => $e->getMessage()]);
         }
-
-
 
         return true;
     }
-    
 }

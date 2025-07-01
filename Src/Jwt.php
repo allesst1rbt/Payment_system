@@ -8,8 +8,9 @@ class Jwt
 {
     private string $key;
 
-    public function __construct(){
-        $this->key =  Config::get('SECRET_KEY');
+    public function __construct()
+    {
+        $this->key = Config::get('SECRET_KEY');
     }
 
     public function encode(array $payload): string
