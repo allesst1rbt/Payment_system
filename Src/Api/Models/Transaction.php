@@ -4,11 +4,11 @@ namespace Src\Api\Models;
 
 class Transaction
 {
-    public ?int $id = null;
+    public ?string $id = null;
 
     public ?float $amount = null;
 
-    public ?int $payeeId = null;
+    public ?string $payeeId = null;
 
-    public ?int $payerId = null;
+    public ?string $payerId = null;
 }

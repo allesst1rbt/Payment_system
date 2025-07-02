@@ -8,11 +8,9 @@ interface AccountRespositoryInterface
 {
     public function create(Account $account): ?Account;
 
-    public function updateBalance(int $id, Account $account): ?Account;
+    public function updateBalance(string $id, Account $account): ?Account;
 
-    public function findById(int $id): ?Account;
+    public function findById(string $id): ?Account;
 
-    public function findByUserId(int $id): ?Account;
-
-    public function delete(int $id): void;
+    public function findByUserId(string $id): ?Account;
 }

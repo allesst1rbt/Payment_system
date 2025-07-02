@@ -7,6 +7,7 @@ use PDOException;
 use Src\Api\Db\PdoConnection;
 use Src\Api\Interfaces\UserRepositoryInterface;
 use Src\Api\Models\User;
+use Ulid\Ulid;
 
 class UserRepositoryPdo implements UserRepositoryInterface
 {
@@ -20,12 +21,14 @@ class UserRepositoryPdo implements UserRepositoryInterface
     public function create(User $user): ?User
     {
         try {
+            $id = Ulid::generate();
             $stmt = $this->db->prepare('
-                INSERT INTO users (name, email, password, document, type)
-                VALUES (:name, :email, :password, :document, :type)
+                INSERT INTO users (id, name, email, password, document, type)
+                VALUES (:id, :name, :email, :password, :document, :type)
             ');
 
             $success = $stmt->execute([
+                ':id' => $id,
                 ':name' => $user->name,
                 ':email' => $user->email,
                 ':password' => password_hash($user->password, PASSWORD_BCRYPT),
@@ -34,7 +37,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
             ]);
 
             if ($success) {
-                $user->id = (int) $this->db->lastInsertId();
+                $user->id = $id;
 
                 return $user;
             }
@@ -48,7 +51,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
         }
     }
 
-    public function findByUserId(int $id): ?User
+    public function findByUserId(string $id): ?User
     {
         try {
             $stmt = $this->db->prepare('SELECT id, name, email, password, document FROM users WHERE id = :id');
@@ -57,7 +60,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
 
             if ($data) {
                 $user = new User;
-                $user->id = (int) $data['id'];
+                $user->id = $data['id'];
                 $user->name = $data['name'];
                 $user->email = $data['email'];
                 $user->document = $data['document'];
@@ -83,7 +86,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
 
             if ($data) {
                 $user = new User;
-                $user->id = (int) $data['id'];
+                $user->id = $data['id'];
                 $user->email = $data['email'];
                 $user->password = $data['password'];
                 $user->type = $data['type'];

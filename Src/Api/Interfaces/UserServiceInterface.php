@@ -8,7 +8,7 @@ interface UserServiceInterface
 {
     public function create(array $request): ?User;
 
-    public function findUserById(int $id): ?User;
+    public function findUserById(string $id): ?User;
 
     public function login(object $auth): string;
 }

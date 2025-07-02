@@ -72,6 +72,35 @@ class TransactionService
         }
     }
 
+    public function reversal($transactionId)
+    {
+        $transaction = $this->transactionRepositoryPdo->findById($transactionId);
+
+        if (! $transaction) {
+            throw new \Exception('Transaction not found', 404);
+        }
+        if (! $this->authorizationService->isServiceAvailable()) {
+            throw new \Exception('Service is not available. Try again later.', 500);
+        }
+
+        if (! $this->checkUserBalance($transaction->payeeId, $transaction->amount)) {
+            throw new \Exception('The requested amount is not available.', 422);
+        }
+
+        $arrayTransaction = [
+            'payee' => $transaction->payerId,
+            'payer' => $transaction->payeeId,
+            'amount' => $transaction->amount,
+        ];
+        $this->makeTransaction($arrayTransaction);
+
+    }
+
+    public function userTransactions(string $id): ?array
+    {
+        return $this->transactionRepositoryPdo->findUserTransactions($id);
+    }
+
     private function checkUserBalance($payer, $amount)
     {
         $wallet = $this->accountRepositoryPdo->findByUserId($payer);

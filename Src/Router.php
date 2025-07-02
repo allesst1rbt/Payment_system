@@ -22,7 +22,7 @@ class Router
         self::on($route, $callback, $options);
     }
 
-     public static function put($route, $callback, $options = [])
+    public static function put($route, $callback, $options = [])
     {
         if (strcasecmp($_SERVER['REQUEST_METHOD'], 'PUT') !== 0) {
             return;
@@ -30,7 +30,6 @@ class Router
 
         self::on($route, $callback, $options);
     }
-
 
     public static function on($regex, $cb, $options = [])
     {

@@ -36,4 +36,43 @@ class TransactionController
             ]);
         }
     }
+
+    public function show(Request $request, Response $response)
+    {
+        try {
+
+            $transactions = $this->transactionService->userTransactions($_SESSION['user']['id']);
+
+            $response->toJSON([
+                'success' => true,
+                'transactions' => $transactions,
+            ]);
+
+        } catch (Exception $e) {
+            $response->toJSON([
+                'success' => false,
+                'error' => 'Unexpected error: '.$e->getMessage(),
+            ]);
+        }
+    }
+
+    public function reversal(Request $request, Response $response)
+    {
+        try {
+
+            $data = (array) $request->getJSON();
+
+            $this->transactionService->reversal($data['transactionId']);
+
+            $response->toJSON([
+                'success' => true,
+            ]);
+
+        } catch (Exception $e) {
+            $response->toJSON([
+                'success' => false,
+                'error' => 'Unexpected error: '.$e->getMessage(),
+            ]);
+        }
+    }
 }

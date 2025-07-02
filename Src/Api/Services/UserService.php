@@ -50,7 +50,7 @@ class UserService implements UserServiceInterface
 
     }
 
-    public function findUserById(int $id): ?User
+    public function findUserById(string $id): ?User
     {
         $user = $this->userRespositoryPdo->findByUserId($id);
         $user->account = $this->accountRepositoryPdo->findByUserId($user->id);

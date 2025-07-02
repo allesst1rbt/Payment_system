@@ -4,7 +4,7 @@ namespace Src\Api\Models;
 
 class User
 {
-    public ?int $id = null;
+    public ?string $id = null;
 
     public ?string $name = null;
 
@@ -17,9 +17,4 @@ class User
     public ?string $type = null;
 
     public ?Account $account = null;
-
-    public function isShopKeeper()
-    {
-        return $this->type == 'shopKeeper';
-    }
 }

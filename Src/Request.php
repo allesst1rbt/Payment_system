@@ -33,7 +33,7 @@ class Request
 
     public function getJSON()
     {
-        if ($this->reqMethod !== 'POST') {
+        if ($this->reqMethod !== 'POST' && $this->reqMethod !== 'PUT') {
             return [];
         }
 

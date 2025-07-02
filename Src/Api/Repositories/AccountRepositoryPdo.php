@@ -7,6 +7,7 @@ use PDOException;
 use Src\Api\Db\PdoConnection;
 use Src\Api\Interfaces\AccountRespositoryInterface;
 use Src\Api\Models\Account;
+use Ulid\Ulid;
 
 class AccountRepositoryPdo implements AccountRespositoryInterface
 {
@@ -20,17 +21,19 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
     public function create(Account $account): ?Account
     {
         try {
+            $id = Ulid::generate();
             $stmt = $this->db->prepare('
-                INSERT INTO accounts (balance, user_id)
-                VALUES (:balance, :user_id)
+                INSERT INTO accounts (id, balance, user_id)
+                VALUES (:id, :balance, :user_id)
             ');
 
             $stmt->execute([
+                ':id' => $id,
                 ':balance' => $account->balance,
                 ':user_id' => $account->userId,
             ]);
 
-            $account->id = (int) $this->db->lastInsertId();
+            $account->id = $id;
 
             return $account;
         } catch (PDOException $e) {
@@ -40,7 +43,7 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
         }
     }
 
-    public function updateBalance(int $id, Account $account): ?Account
+    public function updateBalance(string $id, Account $account): ?Account
     {
         try {
             $stmt = $this->db->prepare('
@@ -54,8 +57,6 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
                 ':balance' => $account->balance,
             ]);
 
-            $account->id = $id;
-
             return $account;
         } catch (PDOException $e) {
             echo 'Error updating account: '.$e->getMessage();
@@ -64,7 +65,7 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
         }
     }
 
-    public function findById(int $id): ?Account
+    public function findById(string $id): ?Account
     {
         try {
             $stmt = $this->db->prepare('SELECT * FROM accounts WHERE id = :id');
@@ -77,7 +78,7 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
             }
 
             $account = new Account;
-            $account->id = (int) $data['id'];
+            $account->id = $data['id'];
             $account->balance = $data['balance'];
             $account->userId = $data['user_id'];
 
@@ -89,7 +90,7 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
         }
     }
 
-    public function findByUserId(int $id): ?Account
+    public function findByUserId(string $id): ?Account
     {
         try {
             $stmt = $this->db->prepare('SELECT * FROM accounts WHERE user_id = :user_id');
@@ -102,7 +103,7 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
             }
 
             $account = new Account;
-            $account->id = (int) $data['id'];
+            $account->id = $data['id'];
             $account->balance = $data['balance'];
             $account->userId = $data['user_id'];
 
@@ -111,16 +112,6 @@ class AccountRepositoryPdo implements AccountRespositoryInterface
             echo 'Error finding account: '.$e->getMessage();
 
             return null;
-        }
-    }
-
-    public function delete(int $id): void
-    {
-        try {
-            $stmt = $this->db->prepare('DELETE FROM accounts WHERE id = :id');
-            $stmt->execute([':id' => $id]);
-        } catch (PDOException $e) {
-            echo 'Error deleting account: '.$e->getMessage();
         }
     }
 }

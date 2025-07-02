@@ -4,11 +4,11 @@ namespace Src\Api\Models;
 
 class Account
 {
-    public ?int $id = null;
+    public ?string $id = null;
 
     public ?float $balance = null;
 
-    public ?int $userId = null;
+    public ?string $userId = null;
 
     public function withDraw(float $amount)
     {

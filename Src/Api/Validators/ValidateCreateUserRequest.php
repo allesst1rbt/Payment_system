@@ -14,7 +14,7 @@ class ValidateCreateUserRequest implements ValidatorInterface
         $validator = new Validator($params, [
             'name' => 'required|string',
             'email' => 'required|email',
-            'password' => 'required|string',
+            'password' => 'required|password',
             'document' => 'required|string',
         ]);
 
