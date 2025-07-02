@@ -1,19 +1,51 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  mysql_db:
-    image: mysql:8.0
-    container_name: mysql_db
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword  
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password           
-    ports:
-      - "3312:3306"
+  app:
+    build: 
+      context: ./
+      dockerfile: app.dockerfile
+    container_name: php_fpm
     volumes:
-      - mysql-data:/var/lib/mysql
-    restart: unless-stopped
+      - ./:/var/www/html
+    expose:
+      - 9000
+    networks:
+      - app  
 
-volumes:
-  mysql-data:
+  database:
+    image: mysql:8.0
+    platform: linux/amd64 
+    command: "--pid-file /var/lib/mysql/mysqld.pid"
+    volumes:
+      - ./php:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=php2345
+      - MYSQL_DATABASE=payment_system
+      - MYSQL_USER=payment
+      - MYSQL_PASSWORD=payment
+    ports:
+      - "3399:3306"
+    healthcheck:
+      test: '/usr/bin/mysql --user=root --password=php2345 --execute "SHOW DATABASES;"'
+      interval: 2s
+      timeout: 20s
+      retries: 10 
+
+  web:
+    build:
+      context: ./
+      dockerfile: web.dockerfile
+    working_dir: /var/www
+    volumes_from:
+      - app
+    links:
+      - database
+    ports:
+      - 8099:80
+    networks:
+      - app
+
+networks:
+  app:

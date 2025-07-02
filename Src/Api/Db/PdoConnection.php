@@ -14,7 +14,7 @@ class PdoConnection
         if (self::$instance === null) {
             try {
                 self::$instance = new PDO(
-                    'mysql:host=127.0.0.1;port=3312;dbname=mydb;charset=utf8',
+                    'mysql:host=localhost;port=3312;dbname=payment_system;charset=utf8',
                     'user',
                     'password'
                 );

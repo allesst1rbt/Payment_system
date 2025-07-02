@@ -8,7 +8,7 @@ use Src\Api\Repositories\AccountRepositoryPdo;
 
 class AccountService
 {
-    private AccountRepositoryPdo $accountRepositoryPdo;
+    protected AccountRepositoryPdo $accountRepositoryPdo;
 
     public function __construct()
     {

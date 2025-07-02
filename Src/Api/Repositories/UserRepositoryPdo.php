@@ -101,4 +101,26 @@ class UserRepositoryPdo implements UserRepositoryInterface
             return null;
         }
     }
+
+     public function findByUserDocument(string $document): ?User
+    {
+        try {
+            $stmt = $this->db->prepare('SELECT id FROM users WHERE document = :document');
+            $stmt->execute([':document' => $document]);
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                $user = new User;
+                $user->id = $data['id'];
+
+                return $user;
+            }
+
+            return null;
+        } catch (PDOException $e) {
+            echo 'Error finding user: '.$e->getMessage();
+
+            return null;
+        }
+    }
 }

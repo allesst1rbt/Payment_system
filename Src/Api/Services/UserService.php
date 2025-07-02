@@ -31,9 +31,13 @@ class UserService implements UserServiceInterface
         $validated = ValidateCreateUserRequest::validate($request);
 
         if (is_array($validated)) {
-            throw new Exception('Invalid data received for user creation.', 502);
+            throw new Exception('Invalid data received for user creation.', 422);
         }
-
+        $email = $this->userRespositoryPdo->findByUserEmail($request['email']);
+        $document = $this->userRespositoryPdo->findByUserDocument($request['document']);
+        if ( $email !== null or $document !== null) {
+            throw new Exception('Document or email already used', 422);
+        }
         $user = new User;
         $user->name = $request['name'];
         $user->email = $request['email'];

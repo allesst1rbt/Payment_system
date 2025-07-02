@@ -12,13 +12,13 @@ class TransactionService
 {
     const BASE_URL = 'https://run.mocky.io/';
 
-    private AuthorizationService $authorizationService;
+    protected AuthorizationService $authorizationService;
 
-    private TransactionRepositoryPdo $transactionRepositoryPdo;
+    protected TransactionRepositoryPdo $transactionRepositoryPdo;
 
-    private PDO $pdoConnection;
+    protected PDO $pdoConnection;
 
-    private AccountRepositoryPdo $accountRepositoryPdo;
+    protected AccountRepositoryPdo $accountRepositoryPdo;
 
     public function __construct()
     {

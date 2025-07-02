@@ -43,6 +43,14 @@ test('can create a user successfully', function () {
         ->shouldReceive('create')
         ->once()
         ->andReturn($mockUser);
+    $this->userRepository
+        ->shouldReceive('findByUserEmail')
+        ->once()
+        ->andReturn(null);
+    $this->userRepository
+        ->shouldReceive('findByUserDocument')
+        ->once()
+        ->andReturn(null);
 
     $this->accountRepository
         ->shouldReceive('create')
@@ -56,7 +64,78 @@ test('can create a user successfully', function () {
     expect($result->account->balance)->toEqual(100.00);
 });
 
+test('cannot create a user successfully because password', function () {
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('Invalid data received for user creation.');
+    
+    $request = [
+        'name' => 'Test User',
+        'email' => 'user@example.com',
+        'document' => '12345678900',
+        'password' => '12345678900',
+        'type' => 'user',
+    ];
 
+
+    $this->service->create($request);
+});
+
+test('cannot create a user successfully because already used email', function () {
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('Document or email already used');
+    $request = [
+        'name' => 'Test User',
+        'email' => 'user@example.com',
+        'document' => '12345678900',
+        'password' => 'Pass12&woe',
+        'type' => 'user',
+    ];
+
+    $mockUser = new User;
+    $mockUser->id = 1;
+
+
+    $this->userRepository
+        ->shouldReceive('findByUserEmail')
+        ->once()
+        ->andReturn($mockUser);
+    $this->userRepository
+        ->shouldReceive('findByUserDocument')
+        ->once()
+        ->andReturn(null);
+
+
+    $this->service->create($request);
+
+});
+test('cannot create a user successfully because already used document', function () {
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('Document or email already used');
+    $request = [
+        'name' => 'Test User',
+        'email' => 'user@example.com',
+        'document' => '12345678900',
+        'password' => 'Pass12&woe',
+        'type' => 'user',
+    ];
+
+    $mockUser = new User;
+    $mockUser->id = 1;
+
+
+    $this->userRepository
+        ->shouldReceive('findByUserEmail')
+        ->once()
+        ->andReturn($mockUser);
+    $this->userRepository
+        ->shouldReceive('findByUserDocument')
+        ->once()
+        ->andReturn(null);
+
+
+    $this->service->create($request);
+
+});
 test('find user by id returns user with account', function () {
     $user = new User;
     $user->id = 1;
