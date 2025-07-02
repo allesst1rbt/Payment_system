@@ -27,6 +27,8 @@ services:
       - MYSQL_PASSWORD=payment
     ports:
       - "3399:3306"
+    networks:
+      - app  
     healthcheck:
       test: '/usr/bin/mysql --user=root --password=php2345 --execute "SHOW DATABASES;"'
       interval: 2s
