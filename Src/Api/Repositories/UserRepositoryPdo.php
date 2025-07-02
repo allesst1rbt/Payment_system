@@ -102,7 +102,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
         }
     }
 
-     public function findByUserDocument(string $document): ?User
+    public function findByUserDocument(string $document): ?User
     {
         try {
             $stmt = $this->db->prepare('SELECT id FROM users WHERE document = :document');

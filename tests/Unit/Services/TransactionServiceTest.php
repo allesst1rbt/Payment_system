@@ -1,11 +1,11 @@
 <?php
 
-use Src\Api\Models\Transaction;
 use Src\Api\Models\Account;
-use Src\Api\Services\TransactionService;
-use Src\Api\Services\AuthorizationService;
-use Src\Api\Repositories\TransactionRepositoryPdo;
+use Src\Api\Models\Transaction;
 use Src\Api\Repositories\AccountRepositoryPdo;
+use Src\Api\Repositories\TransactionRepositoryPdo;
+use Src\Api\Services\AuthorizationService;
+use Src\Api\Services\TransactionService;
 
 beforeEach(function () {
     $this->authService = mock(AuthorizationService::class);
@@ -13,7 +13,8 @@ beforeEach(function () {
     $this->accountRepo = mock(AccountRepositoryPdo::class);
     $this->pdo = mock(PDO::class);
 
-    $this->service = new class($this->authService, $this->transactionRepo, $this->accountRepo, $this->pdo) extends TransactionService {
+    $this->service = new class($this->authService, $this->transactionRepo, $this->accountRepo, $this->pdo) extends TransactionService
+    {
         public function __construct($auth, $transRepo, $accountRepo, $pdo)
         {
             $this->authorizationService = $auth;
@@ -54,7 +55,6 @@ test('should throw exception when user has insufficient balance', function () {
         'amount' => 100,
     ]);
 });
-
 
 test('should rollback if an exception occurs during makeTransaction', function () {
     $transaction = new Transaction;

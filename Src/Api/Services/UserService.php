@@ -35,7 +35,7 @@ class UserService implements UserServiceInterface
         }
         $email = $this->userRespositoryPdo->findByUserEmail($request['email']);
         $document = $this->userRespositoryPdo->findByUserDocument($request['document']);
-        if ( $email !== null or $document !== null) {
+        if ($email !== null or $document !== null) {
             throw new Exception('Document or email already used', 422);
         }
         $user = new User;

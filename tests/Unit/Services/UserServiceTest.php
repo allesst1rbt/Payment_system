@@ -1,19 +1,19 @@
 <?php
 
-use Src\Api\Models\User;
 use Src\Api\Models\Account;
-use Src\Api\Services\UserService;
-use Src\Api\Repositories\UserRepositoryPdo;
+use Src\Api\Models\User;
 use Src\Api\Repositories\AccountRepositoryPdo;
+use Src\Api\Repositories\UserRepositoryPdo;
+use Src\Api\Services\UserService;
 use Src\Jwt;
-use PHPUnit\Framework\MockObject\MockObject;
 
 beforeEach(function () {
-     $this->userRepository = mock(UserRepositoryPdo::class);
+    $this->userRepository = mock(UserRepositoryPdo::class);
     $this->accountRepository = mock(AccountRepositoryPdo::class);
     $this->jwt = mock(Jwt::class);
 
-    $this->service = new class($this->userRepository, $this->accountRepository, $this->jwt) extends UserService {
+    $this->service = new class($this->userRepository, $this->accountRepository, $this->jwt) extends UserService
+    {
         public function __construct($userRepo, $accountRepo, $jwt)
         {
             $this->userRespositoryPdo = $userRepo;
@@ -67,7 +67,7 @@ test('can create a user successfully', function () {
 test('cannot create a user successfully because password', function () {
     $this->expectException(Exception::class);
     $this->expectExceptionMessage('Invalid data received for user creation.');
-    
+
     $request = [
         'name' => 'Test User',
         'email' => 'user@example.com',
@@ -75,7 +75,6 @@ test('cannot create a user successfully because password', function () {
         'password' => '12345678900',
         'type' => 'user',
     ];
-
 
     $this->service->create($request);
 });
@@ -94,7 +93,6 @@ test('cannot create a user successfully because already used email', function ()
     $mockUser = new User;
     $mockUser->id = 1;
 
-
     $this->userRepository
         ->shouldReceive('findByUserEmail')
         ->once()
@@ -103,7 +101,6 @@ test('cannot create a user successfully because already used email', function ()
         ->shouldReceive('findByUserDocument')
         ->once()
         ->andReturn(null);
-
 
     $this->service->create($request);
 
@@ -122,7 +119,6 @@ test('cannot create a user successfully because already used document', function
     $mockUser = new User;
     $mockUser->id = 1;
 
-
     $this->userRepository
         ->shouldReceive('findByUserEmail')
         ->once()
@@ -131,7 +127,6 @@ test('cannot create a user successfully because already used document', function
         ->shouldReceive('findByUserDocument')
         ->once()
         ->andReturn(null);
-
 
     $this->service->create($request);
 

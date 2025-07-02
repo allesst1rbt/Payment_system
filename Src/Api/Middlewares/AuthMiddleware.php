@@ -1,6 +1,7 @@
 <?php
 
 namespace Src\Api\Middlewares;
+
 use Exception;
 use Src\Jwt;
 use Src\Request;
