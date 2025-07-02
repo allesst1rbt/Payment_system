@@ -16,8 +16,10 @@ class User
 
     public ?string $type = null;
 
-    public function isShopKeeper() {
-        return $this->type == 'shopkeeper';
-    }
+    public ?Account $account = null;
 
+    public function isShopKeeper()
+    {
+        return $this->type == 'shopKeeper';
+    }
 }

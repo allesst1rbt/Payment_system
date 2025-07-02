@@ -21,8 +21,8 @@ class UserRepositoryPdo implements UserRepositoryInterface
     {
         try {
             $stmt = $this->db->prepare('
-                INSERT INTO users (name, email, password, document)
-                VALUES (:name, :email, :password, :document)
+                INSERT INTO users (name, email, password, document, type)
+                VALUES (:name, :email, :password, :document, :type)
             ');
 
             $success = $stmt->execute([
@@ -30,6 +30,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
                 ':email' => $user->email,
                 ':password' => password_hash($user->password, PASSWORD_BCRYPT),
                 ':document' => $user->document,
+                ':type' => $user->type,
             ]);
 
             if ($success) {
@@ -60,6 +61,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
                 $user->name = $data['name'];
                 $user->email = $data['email'];
                 $user->document = $data['document'];
+                $user->type = $data['type'];
 
                 return $user;
             }
@@ -75,7 +77,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
     public function findByUserEmail(string $email): ?User
     {
         try {
-            $stmt = $this->db->prepare('SELECT id, name, email, password, document FROM users WHERE email = :email');
+            $stmt = $this->db->prepare('SELECT id, name, email, password, document, type FROM users WHERE email = :email');
             $stmt->execute([':email' => $email]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -84,6 +86,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
                 $user->id = (int) $data['id'];
                 $user->email = $data['email'];
                 $user->password = $data['password'];
+                $user->type = $data['type'];
 
                 return $user;
             }

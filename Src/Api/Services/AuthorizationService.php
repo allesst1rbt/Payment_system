@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Src\Api\Services;
 
 use GuzzleHttp\Client;
 
@@ -25,7 +25,7 @@ class AuthorizationService
             $response = $this->client->request('GET', $uri);
             $response = json_decode($response->getBody(), true);
 
-            return $response['message'] == 'Autorizado';
+            return $response[0]['message'] == 'Autorizado';
         } catch (\Exception $e) {
             return false;
         }

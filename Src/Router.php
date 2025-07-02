@@ -22,6 +22,16 @@ class Router
         self::on($route, $callback, $options);
     }
 
+     public static function put($route, $callback, $options = [])
+    {
+        if (strcasecmp($_SERVER['REQUEST_METHOD'], 'PUT') !== 0) {
+            return;
+        }
+
+        self::on($route, $callback, $options);
+    }
+
+
     public static function on($regex, $cb, $options = [])
     {
         $uri = $_SERVER['REQUEST_URI'];
