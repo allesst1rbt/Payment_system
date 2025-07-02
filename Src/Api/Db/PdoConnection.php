@@ -14,9 +14,9 @@ class PdoConnection
         if (self::$instance === null) {
             try {
                 self::$instance = new PDO(
-                    'mysql:host=localhost;port=3312;dbname=payment_system;charset=utf8',
-                    'user',
-                    'password'
+                    'mysql:host=database;port=3306;dbname=payment_system;charset=utf8',
+                    'payment',
+                    'payment'
                 );
                 self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {

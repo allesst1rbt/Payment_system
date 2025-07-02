@@ -18,8 +18,8 @@ services:
     platform: linux/amd64 
     command: "--pid-file /var/lib/mysql/mysqld.pid"
     volumes:
-      - ./php:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./mysql_data:/var/lib/mysql              # Use a dedicated volume
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     environment:
       - MYSQL_ROOT_PASSWORD=php2345
       - MYSQL_DATABASE=payment_system

@@ -1,11 +1,31 @@
 FROM php:8.3-fpm
 
-RUN apt-get update && apt-get install -y git openssl  unzip libmcrypt-dev  libzip-dev libxml2-dev libonig-dev  \
-    libmagickwand-dev --no-install-recommends
-RUN pecl install mcrypt-1.0.7
-RUN docker-php-ext-enable mcrypt
+RUN apt-get update && apt-get install -y \
+    libmcrypt-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libwebp-dev \
+    libfreetype6-dev \
+    libxml2-dev \
+    libonig-dev \
+    libzip-dev \
+    unzip \
+    libssl-dev \
+    gcc \
+    make \
+    autoconf \
+    && pecl install mcrypt-1.0.7 \
+    && docker-php-ext-enable mcrypt \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j$(nproc) \
+        gd \
+        xml \
+        pdo \
+        mbstring \
+        pdo_mysql \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
         
-RUN docker-php-ext-install gd  tokenizer xml pdo mbstring pdo_mysql
 
 COPY ./ /var/www/html
 
