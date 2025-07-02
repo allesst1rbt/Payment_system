@@ -1,7 +1,6 @@
 <?php
 
-namespace Src\Middlewares;
-
+namespace Src\Api\Middlewares;
 use Exception;
 use Src\Jwt;
 use Src\Request;
@@ -15,6 +14,8 @@ class AuthMiddleware
         if (! preg_match("/^Bearer\s+(.*)$/", $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
             $res->status(400);
             $res->toJSON(['message' => 'incomplete authorization header']);
+
+            return false;
         }
 
         try {
@@ -24,6 +25,9 @@ class AuthMiddleware
 
             $res->status(400);
             $res->toJSON(['message' => $e->getMessage()]);
+
+            return false;
+
         }
 
         return true;

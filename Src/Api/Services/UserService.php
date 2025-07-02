@@ -13,14 +13,17 @@ use Src\Jwt;
 
 class UserService implements UserServiceInterface
 {
-    private UserRepositoryPdo $userRespositoryPdo;
+    protected UserRepositoryPdo $userRespositoryPdo;
 
-    private AccountRepositoryPdo $accountRepositoryPdo;
+    protected AccountRepositoryPdo $accountRepositoryPdo;
+
+    protected Jwt $jwt;
 
     public function __construct()
     {
         $this->userRespositoryPdo = new UserRepositoryPdo;
         $this->accountRepositoryPdo = new AccountRepositoryPdo;
+        $this->jwt = new Jwt;
     }
 
     public function create(array $request): ?User
@@ -68,6 +71,6 @@ class UserService implements UserServiceInterface
             throw new Exception('Invalid Credentials', 502);
         }
 
-        return (new Jwt)->encode((array) $user);
+        return $this->jwt->encode((array) $user);
     }
 }

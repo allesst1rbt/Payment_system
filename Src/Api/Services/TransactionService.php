@@ -64,8 +64,6 @@ class TransactionService
 
             $this->pdoConnection->commit();
 
-            // dispatch(new SendTransactionNotificationJob)->onQueue('transaction_notifications');
-
         } catch (\Exception $e) {
             $this->pdoConnection->rollback();
             throw new \Exception('Error while making transaction!');

@@ -21,7 +21,7 @@ class TransactionNotifierService
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $exception) {
-            throw new \Exception('Error, retry job!');
+            throw new \Exception('Error, sending message!');
         }
     }
 }

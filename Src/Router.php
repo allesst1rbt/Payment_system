@@ -61,8 +61,13 @@ class Router
                     return;
                 }
             }
+            try {
+                $cb($req, $res);
+            } catch (\Exception $e) {
+                $res->status($e->getCode());
+                $res->toJSON(['message' => $e->getMessage()]);
+            }
 
-            $cb($req, $res);
         }
     }
 }

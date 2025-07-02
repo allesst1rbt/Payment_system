@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Middlewares;
+namespace Src\Api\Middlewares;
 
 use Exception;
 use Src\Request;
@@ -16,17 +16,27 @@ class AllowedToTransferMiddleware
             $user = $_SESSION['user'];
 
             if ($user['id'] == ($req->getJSON())->payee) {
-                throw new Exception("You can't transfer money to yourself! You should deposit it!", 400);
+                $res->status(400);
+                $res->toJSON(['message' => "You can't transfer money to yourself! You should deposit it!"]);
+
+                return false;
+
             }
 
             if ($user['type'] == 'shopKeeper') {
-                throw new Exception("ShopKeepers can't transfer money!", 400);
+                $res->status(400);
+                $res->toJSON(['message' => "ShopKeepers can't transfer money!"]);
+
+                return false;
+
             }
 
         } catch (Exception $e) {
 
             $res->status(400);
             $res->toJSON(['message' => $e->getMessage()]);
+
+            return false;
         }
 
         return true;
