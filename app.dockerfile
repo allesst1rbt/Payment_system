@@ -34,6 +34,10 @@ WORKDIR /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html
 COPY ./docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
+
 
 EXPOSE 9000
