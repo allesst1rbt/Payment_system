@@ -54,7 +54,7 @@ class UserRepositoryPdo implements UserRepositoryInterface
     public function findByUserId(string $id): ?User
     {
         try {
-            $stmt = $this->db->prepare('SELECT id, name, email, password, document FROM users WHERE id = :id');
+            $stmt = $this->db->prepare('SELECT id, name, email, password, document, type FROM users WHERE id = :id');
             $stmt->execute([':id' => $id]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
 

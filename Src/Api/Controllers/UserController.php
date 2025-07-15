@@ -64,6 +64,6 @@ class UserController
     public function me(Request $request, Response $response)
     {
         $user = $this->userService->findUserById($_SESSION['user']['id']);
-        $response->toJSON((array) $user);
+        $response->toJSON($user);
     }
 }
