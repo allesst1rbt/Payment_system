@@ -1,6 +1,5 @@
-logs/
 .env
 /vendor
-./logs
+/logs
 /mysql_data
 
