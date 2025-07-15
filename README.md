@@ -1,5 +1,5 @@
 # Payment_system
-##Api focada em um sistema de transações e gerenciamento de conta feito puramente com php
+## Api focada em um sistema de transações e gerenciamento de conta feito puramente com php
 ## observaçôes:
 ### 1-Tenha o docker instalado, se não tiver e caso queira, siga os passos abaixo
 # Ultilizando com o docker:
