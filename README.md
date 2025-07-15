@@ -27,6 +27,6 @@ docker-compose up -d
 
 Pronto ele ja estara rodando na porta `8099`
 
-No projeto ha uma postman collection para voce conseguir ultilizar o projeto
+No projeto ha uma postman collection para voce conseguir ultilizar o projeto e testa-lo corretamente
 
 
