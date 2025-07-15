@@ -25,7 +25,7 @@ Suba o docker
 docker-compose up -d
 ````
 
-Pronto ele ja estara rodando na porta `8099`
+Pronto ele ja estara rodando no endereço local ->  `http://localhost:8099`
 
 No projeto ha uma postman collection para voce conseguir ultilizar o projeto, importe ela no postman e voce ira conseguir ultiliza-la 
 
