@@ -1,5 +1,5 @@
 # Payment_system
-Criei essa api do zero apenas com php para implementar alguns conceitos que estudo a tempos
+## Api focada em um sistema de transações e gerenciamento de conta feito puramente com php
 ## observaçôes:
 ### 1-Tenha o docker instalado, se não tiver e caso queira, siga os passos abaixo
 # Ultilizando com o docker:
@@ -25,5 +25,8 @@ Suba o docker
 docker-compose up -d
 ````
 
-Pronto ela ja estara rodando 
+Pronto ele ja estara rodando na porta `8099`
+
+No projeto ha uma postman collection para voce conseguir ultilizar o projeto e testa-lo corretamente
+
 
