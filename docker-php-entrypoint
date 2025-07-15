@@ -3,6 +3,7 @@ cd /var/www/html
 cp .env.example .env
 chmod -R 777 storage
 composer install
+composer dump-autoload
 
 
 set -e
